@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <groupId>org.ghost.selenium</groupId>
+    <artifactId>ghost-test-suite</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>TestSuite to test Ghost CMS</name>
+    <url>http://www.prosky.org</url>
+
+    <properties>
+		<!-- Configuration: TestCases to be run -->		
+		<tests.include.patern>%regex[.*(Cat|Dog).*], !%regex[pkg.*Slow.*.class], pkg/**/*Fast*.java, Basic????, !Unstable*</tests.include.patern>
+       	<tests.include.patern>**/Test_??_*.java</tests.include.patern>
+       	<tests.exclude.patern/>
+       	<it.test>Test_01_BaseFunctionality</it.test>
+       	<it.test>Test_02_PostCreateEditDelete#test_03_deletePost</it.test>
+       	<it.test/>
+		
+        <!-- Configuration: Test Object -->
+       	<users.admin.email>admin@prosky.org</users.admin.email>
+		<users.admin.password>admin123</users.admin.password>
+        <site.url>http://127.0.0.1:2368</site.url>
+        
+        <!-- Configuration: Test Environment -->
+        <browser>firefox</browser>
+        <browserVersion/>
+        <remote>false</remote>
+        <seleniumGridURL/>
+        <platform/>
+        <proxyEnabled>false</proxyEnabled>
+        <proxyHost/>
+        <proxyPort/>
+        
+        <!-- Configuration: Logging -->
+        <java.util.logging.config.file>logging.properties</java.util.logging.config.file>
+        <trimStackTrace>false</trimStackTrace>
+        
+        <!-- Configuration: Other -->
+        <threads>1</threads>
+        <retry.attempts>4</retry.attempts>
+        <read.timeout>30000</read.timeout>
+        <connection.timeout>40000</connection.timeout>
+        <overwrite.binaries>false</overwrite.binaries>
+        
+    		<!-- General -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        
+        <!-- Dependency Versions -->
+        <selenium.version>3.6.0</selenium.version>
+        <hamcrest-all.version>1.3</hamcrest-all.version>
+        <phantomjsdriver.version>1.4.1</phantomjsdriver.version>
+        <testng.version>6.11</testng.version>
+        
+        <!-- Plug-in Versions -->
+        <driver-binary-downloader-maven-plugin.version>1.0.14</driver-binary-downloader-maven-plugin.version>
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest-all.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-remote-driver</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.detro.ghostdriver</groupId>
+                    <artifactId>phantomjsdriver</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.detro.ghostdriver</groupId>
+                    <artifactId>phantomjsdriver</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>${phantomjsdriver.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>selenium-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                        <version>${maven-compiler-plugin.version}</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.lazerycode.selenium</groupId>
+                        <artifactId>driver-binary-downloader-maven-plugin</artifactId>
+                        <version>${driver-binary-downloader-maven-plugin.version}</version>
+                        <configuration>
+                            <rootStandaloneServerDirectory>${project.basedir}/src/test/resources/selenium_standalone_binaries</rootStandaloneServerDirectory>
+                            <downloadedZipFileDirectory>${project.basedir}/src/test/resources/selenium_standalone_zips</downloadedZipFileDirectory>
+                            <customRepositoryMap>${project.basedir}/src/test/resources/RepositoryMap.xml</customRepositoryMap>
+                            <overwriteFilesThatExist>${overwrite.binaries}</overwriteFilesThatExist>
+                            <onlyGetDriversForHostOperatingSystem>false</onlyGetDriversForHostOperatingSystem>
+                            <fileDownloadRetryAttempts>${retry.attempts}</fileDownloadRetryAttempts>
+                            <fileDownloadReadTimeout>${read.timeout}</fileDownloadReadTimeout>
+                            <operatingSystems>
+                                <windows>true</windows>
+                                <linux>true</linux>
+                                <mac>true</mac>
+                            </operatingSystems>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>selenium</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                            <trimStackTrace>${trimStackTrace}</trimStackTrace>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+<<<<<<< Local Changes
+                            <parallel>methods</parallel>
+                            <threadCount>${threads}</threadCount>
+                            <includes>
+                                <include>**/Test_*_*.java</include>
+                            </includes>
+                            <systemPropertyVariables>
+                                <browser>${browser}</browser>
+                                <screenshotDirectory>${project.build.directory}/screenshots</screenshotDirectory>
+                                <remoteDriver>${remote}</remoteDriver>
+                                <gridURL>${seleniumGridURL}</gridURL>
+                                <desiredPlatform>${platform}</desiredPlatform>
+                                <desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
+                                <proxyEnabled>${proxyEnabled}</proxyEnabled>
+                                <proxyHost>${proxyHost}</proxyHost>
+                                <proxyPort>${proxyPort}</proxyPort>
+                                <siteUrl>${site.url}</siteUrl>
+                                <java.util.logging.config.file>config.properties</java.util.logging.config.file>
+
+                                <!--Set properties passed in by the driver binary downloader-->
+                                <phantomjs.binary.path>${phantomjs.binary.path}</phantomjs.binary.path>
+                                <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
+                                <webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>
+                                <webdriver.opera.driver>${webdriver.opera.driver}</webdriver.opera.driver>
+                                <webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
+                                <webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
+                            </systemPropertyVariables>
+=======
+							<parallel>methods</parallel>
+							<threadCount>${threads}</threadCount>
+							<includes>
+								<include>${tests.include.patern}</include>
+							</includes>
+							<excludes>
+								<exclude>${tests.exclude.patern}</exclude>
+							</excludes>
+							<systemPropertyVariables>
+								<browser>${browser}</browser>
+								<screenshotDirectory>${project.build.directory}/screenshots</screenshotDirectory>
+								<remoteDriver>${remote}</remoteDriver>
+								<gridURL>${seleniumGridURL}</gridURL>
+								<desiredPlatform>${platform}</desiredPlatform>
+								<desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
+								<proxyEnabled>${proxyEnabled}</proxyEnabled>
+								<proxyHost>${proxyHost}</proxyHost>
+								<proxyPort>${proxyPort}</proxyPort>
+								<siteUrl>${site.url}</siteUrl>
+								<users.admin.email>${users.admin.email}</users.admin.email>
+								<users.admin.password>${users.admin.password}</users.admin.password>
+								<java.util.logging.config.file>${java.util.logging.config.file}</java.util.logging.config.file>
+								
+								<!-- Set properties passed in by the driver binary downloader -->
+								<phantomjs.binary.path>${phantomjs.binary.path}</phantomjs.binary.path>
+								<webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
+								<webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>
+								<webdriver.opera.driver>${webdriver.opera.driver}</webdriver.opera.driver>
+								<webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
+								<webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
+							</systemPropertyVariables>
+>>>>>>> External Changes
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <!-- This goal makes the build fail if you have test failures -->
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
