@@ -1,7 +1,7 @@
 Ghost TestSuite - Example of Java Selenium TestFramawork
 =======================
 
-A TestFramework for Selenium 3 WebDriver combain with Maven and TestND that has the latest dependencies.
+A TestFramework for Selenium 3 WebDriver combain with Maven and TestNG.
 
 ### Prerequisites
 
