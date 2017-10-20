@@ -166,34 +166,6 @@
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven-failsafe-plugin.version}</version>
                         <configuration>
-<<<<<<< Local Changes
-                            <parallel>methods</parallel>
-                            <threadCount>${threads}</threadCount>
-                            <includes>
-                                <include>**/Test_*_*.java</include>
-                            </includes>
-                            <systemPropertyVariables>
-                                <browser>${browser}</browser>
-                                <screenshotDirectory>${project.build.directory}/screenshots</screenshotDirectory>
-                                <remoteDriver>${remote}</remoteDriver>
-                                <gridURL>${seleniumGridURL}</gridURL>
-                                <desiredPlatform>${platform}</desiredPlatform>
-                                <desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
-                                <proxyEnabled>${proxyEnabled}</proxyEnabled>
-                                <proxyHost>${proxyHost}</proxyHost>
-                                <proxyPort>${proxyPort}</proxyPort>
-                                <siteUrl>${site.url}</siteUrl>
-                                <java.util.logging.config.file>config.properties</java.util.logging.config.file>
-
-                                <!--Set properties passed in by the driver binary downloader-->
-                                <phantomjs.binary.path>${phantomjs.binary.path}</phantomjs.binary.path>
-                                <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
-                                <webdriver.ie.driver>${webdriver.ie.driver}</webdriver.ie.driver>
-                                <webdriver.opera.driver>${webdriver.opera.driver}</webdriver.opera.driver>
-                                <webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
-                                <webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
-                            </systemPropertyVariables>
-=======
 							<parallel>methods</parallel>
 							<threadCount>${threads}</threadCount>
 							<includes>
@@ -225,7 +197,6 @@
 								<webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
 								<webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
 							</systemPropertyVariables>
->>>>>>> External Changes
                         </configuration>
                         <executions>
                             <execution>
