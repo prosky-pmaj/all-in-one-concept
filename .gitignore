@@ -23,3 +23,13 @@ hs_err_pid*
 
 # Mac OS X files
 *.DS_Store
+
+# Project files
+src/test/resources/selenium_standalone_binaries
+src/test/resources/selenium_standalone_zips
+target
+
+# Eclipse files
+.classpath
+.project
+.settings/
