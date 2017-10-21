@@ -198,6 +198,9 @@
 								<webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
 								<webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
 							</systemPropertyVariables>
+							<additionalClasspathElements>
+								<additionalClasspathElement>src/test/resources/test_data</additionalClasspathElement>
+							</additionalClasspathElements>
 						</configuration>
 						<executions>
 							<execution>
