@@ -43,7 +43,7 @@ public class Test_02_PostCreateEditDelete extends TestEnviroment {
 
 		adminPanel.clickContent();
 		adminPanel.findPost(postTitle).click();
-		adminPanel.clickEditIcon();
+		adminPanel.clickEditButton();
 
 		String postTitleTextToAdd = " and later on edited a bit";
 		String postContentTextToAdd = "\n Editing posts is possible as well!";
@@ -71,7 +71,7 @@ public class Test_02_PostCreateEditDelete extends TestEnviroment {
 
 		adminPanel.clickContent();
 		adminPanel.findPost(postTitle).click();
-		adminPanel.clickEditIcon();
+		adminPanel.clickEditButton();
 		adminPanel.deletePost();
 		LOG.info("enD");
 	}
