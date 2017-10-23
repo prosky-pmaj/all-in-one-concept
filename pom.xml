@@ -19,7 +19,7 @@
 		<tests.exclude.patern />
 		<it.test>Test_01_BaseFunctionality</it.test>
 		<it.test>Test_02_PostCreateEditDelete#test_03_deletePost</it.test>
-		<it.test />
+		<it.test/>
 
 		<!-- Configuration: Test Object -->
 		<users.admin.email>admin@prosky.org</users.admin.email>
@@ -199,7 +199,8 @@
 								<webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
 							</systemPropertyVariables>
 							<additionalClasspathElements>
-								<additionalClasspathElement>src/test/resources/test_data</additionalClasspathElement>
+ 								<additionalClasspathElement>./</additionalClasspathElement>
+							<additionalClasspathElement>./src/test/resources/test_data</additionalClasspathElement>
 							</additionalClasspathElements>
 						</configuration>
 						<executions>
