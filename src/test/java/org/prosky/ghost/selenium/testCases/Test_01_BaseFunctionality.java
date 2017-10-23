@@ -46,8 +46,8 @@ public class Test_01_BaseFunctionality extends TestEnviroment {
 
     @DataProvider(name = "Authentication")
     public static Object[][] credentials() throws IOException {
-	PropertiesParser properties = new PropertiesParser("postData.properties");
-	Object[][] testDate = properties.getTestData("title.*", "content.*", 2);
+	PropertiesParser prop = new PropertiesParser("test-data-for-posts-creation.properties");
+	Object[][] testDate = prop.getTestData("title", "content", 2);
 	return testDate;
     }
 

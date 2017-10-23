@@ -69,20 +69,49 @@ public class PropertiesParser {
 	return locator;
     }
 
-    public Object[][] getTestData(String type1, String type2, int minExpectefNrOfTests) {
-	int nrOfTests = propertyFile.size() / 2;
+    public Object[][] getTestData(String firstParameterName, String secondParameterName,
+	    int minExpectedNrOfTests) throws IOException {
 
+	int nrOfTests = propertyFile.size() / 2;
+	int amountOfFirstParameters = 0;
+	int amountOfSecondParameters = 0;
+	String firstParameterRegExp = firstParameterName + "[.][0-9]+";
+	String secondParameterRegExp = secondParameterName + "[.][0-9]+";
+
+	if (minExpectedNrOfTests != 0) {
+	    if (nrOfTests < minExpectedNrOfTests) {
+		throw new IOException("TestData file problem: to little TCs to be prepare");
+	    }
+	}
+
+	Object[][] testData = new Object[nrOfTests][2];
 	Enumeration<?> e = propertyFile.propertyNames();
 	while (e.hasMoreElements()) {
 	    String key = (String) e.nextElement();
-	    String value = propertyFile.getProperty(key);
-	    System.out.println("Key : " + key + ", Value : " + value);
+	    if (key.matches(firstParameterRegExp)) {
+		String value = propertyFile.getProperty(key);
+		testData[Integer.parseInt(key.replaceAll(".*[.]", ""))][0] = value;
+		LOG.fine("[First  Parameter] Key : " + key + ", Value : " + value);
+		amountOfFirstParameters++;
+	    } else if (key.matches(secondParameterRegExp)) {
+		String value = propertyFile.getProperty(key);
+		testData[Integer.parseInt(key.replaceAll(".*[.]", ""))][1] = value;
+		LOG.fine("[Second Parameter] Key : " + key + ", Value : " + value);
+		amountOfSecondParameters++;
+	    } else {
+		throw new IOException("TestData file problem: parameter patern doesn't match");
+	    }
 	}
 
-	Object[][] testData = new Object[][] {
-		{ "admin@test.org", "admin123" },
-		{ "admin@prosky.org", "admin123" } };
-	System.out.println(testData[0][0]);
+	if (amountOfFirstParameters != amountOfSecondParameters |
+		nrOfTests != amountOfFirstParameters) {
+	    throw new IOException("TestData file problem: wrong number of parameters");
+	}
+	System.out.println("Test data:");
+	for (int i = 0; i < nrOfTests; i++) {
+	    LOG.info("[" + i + "][0]: " + testData[i][0]);
+	    LOG.info("[" + i + "][1]: " + testData[i][1]);
+	}
 	return testData;
     }
 }
