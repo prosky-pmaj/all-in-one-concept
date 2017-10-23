@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
-public class GenerateProperties {
+public class PropertiesGenerate {
 	public static void main(String[] args) {
 
 		Properties prop = new Properties();
