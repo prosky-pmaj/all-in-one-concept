@@ -24,4 +24,12 @@ public class BlogPage extends Page {
 		driver.findElement(By.xpath("//a[text()='" + title + "']")).click();
 		waitUntilFindElement(By.xpath("//h1[text()='" + title + "']"));
 	}
+
+	public String getPostTitle() {
+		return findElement("blog.postPage.title").getText();
+	}
+
+	public String getPostContent() {
+		return findElement("blog.postPage.content").getText();
+	}
 }

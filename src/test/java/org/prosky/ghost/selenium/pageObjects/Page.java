@@ -10,42 +10,47 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.prosky.ghost.selenium.baseFramework.PropertiesParser;
 
 public class Page {
-    private final String defaultSiteUrl = "http://localhost:2368/";
-    protected final String baseUrl = System.getProperty("site.url", defaultSiteUrl);
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    private PropertiesParser uiMap;
+	private final String defaultSiteUrl = "http://localhost:2368/";
+	protected final String baseUrl = System.getProperty("site.url", defaultSiteUrl);
+	protected WebDriver driver;
+	protected WebDriverWait wait;
+	private PropertiesParser uiMap;
 
-    public Page(WebDriver driver) throws IOException {
-	this.driver = driver;
-	wait = new WebDriverWait(driver, 10);
-	uiMap = new PropertiesParser("user-interface-map.properties");
-    }
-
-    public void waitUntilFindElement(By by) {
-	wait.until(ExpectedConditions.numberOfElementsToBe(by, 1));
-    }
-
-    public void waitUntilFindElement(By by, int timeOut) {
-	WebDriverWait newWait = new WebDriverWait(driver, timeOut);
-	newWait.until(ExpectedConditions.numberOfElementsToBe(by, 1));
-    }
-
-    public void waitUntilFindElement(String locatorName) {
-	try {
-	    waitUntilFindElement(uiMap.getLocator(locatorName));
-
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    throw e;
+	public Page(WebDriver driver) throws IOException {
+		this.driver = driver;
+		wait = new WebDriverWait(driver, 10);
+		uiMap = new PropertiesParser("user-interface-map.properties");
 	}
-    }
 
-    public void waitUntilFindElement(String locatorName, int timeOut) {
-	waitUntilFindElement(uiMap.getLocator(locatorName), timeOut);
-    }
+	public void waitUntilFindElement(By by) {
+		wait.until(ExpectedConditions.numberOfElementsToBe(by, 1));
+	}
 
-    public WebElement findElement(String locatorName) {
-	return driver.findElement(uiMap.getLocator(locatorName));
-    }
+	public void waitUntilFindElement(By by, int timeOut) {
+		WebDriverWait newWait = new WebDriverWait(driver, timeOut);
+		newWait.until(ExpectedConditions.numberOfElementsToBe(by, 1));
+	}
+
+	public void waitUntilFindElement(String locatorName) {
+		try {
+			waitUntilFindElement(uiMap.getLocator(locatorName));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	public void waitUntilFindElement(String locatorName, int timeOut) {
+		waitUntilFindElement(uiMap.getLocator(locatorName), timeOut);
+	}
+
+	public WebElement findElement(String locatorName) {
+		return driver.findElement(uiMap.getLocator(locatorName));
+	}
+
+	public String getPageTitle() {
+		return driver.getTitle();
+	}
+
 }
