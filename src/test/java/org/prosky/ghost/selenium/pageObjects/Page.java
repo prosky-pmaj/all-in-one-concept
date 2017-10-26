@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.prosky.ghost.selenium.baseFramework.PropertiesParser;
 
-public class Page {
+public abstract class Page {
 	private final String defaultSiteUrl = "http://localhost:2368/";
 	protected final String baseUrl = System.getProperty("site.url", defaultSiteUrl);
 	protected WebDriver driver;
@@ -21,6 +21,8 @@ public class Page {
 		wait = new WebDriverWait(driver, 10);
 		uiMap = new PropertiesParser("user-interface-map.properties");
 	}
+
+	public abstract void goTo();
 
 	public void waitUntilFindElement(By by) {
 		wait.until(ExpectedConditions.numberOfElementsToBe(by, 1));
