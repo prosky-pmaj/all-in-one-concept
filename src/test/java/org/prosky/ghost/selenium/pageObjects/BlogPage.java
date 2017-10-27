@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 public class BlogPage extends Page {
 
@@ -31,5 +32,14 @@ public class BlogPage extends Page {
 
 	public String getPostContent() {
 		return findElement("blog.postPage.content").getText();
+	}
+
+	public boolean isPostDataCorrect(String expectedPostTitle, String expectedPostContent) {
+		Assert.assertEquals(getPageTitle(), expectedPostTitle);
+		Assert.assertEquals(getPostTitle(), expectedPostTitle);
+		Assert.assertEquals(
+				getPostContent().replaceAll("\\s+", " "),
+				expectedPostContent.replaceAll("\\s+", " "));
+		return true;
 	}
 }

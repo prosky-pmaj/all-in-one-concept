@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 public class PropertiesParser {
 	private static final Logger LOG = Logger.getLogger(PropertiesParser.class.getName());
@@ -68,49 +69,63 @@ public class PropertiesParser {
 		return locator;
 	}
 
-	public Object[][] getTestData(String firstParameterName, String secondParameterName,
-			int minExpectedNrOfTests) throws IOException {
+	/**
+	 * Read data from property file. Test data format in property file <arg>.[0-9]+
+	 * (e.g. title.1 or post.title.afterEdit.12)
+	 * 
+	 * @param minExpectedNrOfTests
+	 *            the minimum number of test runs that data should be provided for
+	 *            (this ensure that if data file gets corrupted no TCs will miss)
+	 * @param args
+	 *            any number of parameters <arg> refers to data format <arg>.[0-9]+
+	 * @return testData[][]
+	 * @throws IOException
+	 */
+	public Object[][] getTestData(int minExpectedNrOfTests, String... args) throws IOException {
 
-		int nrOfTests = propertyFile.size() / 2;
-		int amountOfFirstParameters = 0;
-		int amountOfSecondParameters = 0;
-		String firstParameterRegExp = firstParameterName + "[.][0-9]+";
-		String secondParameterRegExp = secondParameterName + "[.][0-9]+";
-
+		int nrOfTests = getNumberOfTestsThatTestDataShouldBeProvidedFor(args);
 		if (minExpectedNrOfTests != 0) {
 			if (nrOfTests < minExpectedNrOfTests) {
 				throw new IOException("TestData file problem: to little TCs to be prepare");
 			}
 		}
 
-		Object[][] testData = new Object[nrOfTests][2];
+		Object[][] testData = new Object[nrOfTests][args.length];
 		Enumeration<?> e = propertyFile.propertyNames();
 		while (e.hasMoreElements()) {
 			String key = (String) e.nextElement();
-			if (key.matches(firstParameterRegExp)) {
-				String value = propertyFile.getProperty(key);
-				testData[Integer.parseInt(key.replaceAll(".*[.]", ""))][0] = value;
-				LOG.fine("[First Parameter] Key : " + key + ", Value : " + value);
-				amountOfFirstParameters++;
-			} else if (key.matches(secondParameterRegExp)) {
-				String value = propertyFile.getProperty(key);
-				testData[Integer.parseInt(key.replaceAll(".*[.]", ""))][1] = value;
-				LOG.fine("[Second Parameter] Key : " + key + ", Value : " + value);
-				amountOfSecondParameters++;
-			} else {
-				throw new IOException("TestData file problem: parameter patern doesn't match");
+			int column = 0;
+			for (String arg : args) {
+				if (key.matches(arg + "[.][0-9]+")) {
+					int row = Integer.parseInt(key.replaceAll(".*[.]", ""));
+					String value = propertyFile.getProperty(key);
+					testData[row][column] = value;
+					LOG.fine("Key : " + key + ", Value : " + value.replaceAll("[\n].*", "..."));
+					break;
+				}
+				column++;
 			}
 		}
-
-		if (amountOfFirstParameters != amountOfSecondParameters |
-				nrOfTests != amountOfFirstParameters) {
-			throw new IOException("TestData file problem: wrong number of parameters");
-		}
-		// LOG.info("Test data:");
-		// for (int i = 0; i < nrOfTests; i++) {
-		// LOG.info("[" + i + "][0]: " + testData[i][0]);
-		// LOG.info("[" + i + "][1]: " + testData[i][1]);
-		// }
 		return testData;
+	}
+
+	private int getNumberOfTestsThatTestDataShouldBeProvidedFor(String... args) throws IOException {
+		int[] nrOfParameter = new int[args.length];
+		int i = 0;
+		for (String arg : args) {
+			nrOfParameter[i] = 0;
+			Enumeration<?> e = propertyFile.propertyNames();
+			while (e.hasMoreElements()) {
+				if (((String) e.nextElement()).matches(arg + "[.][0-9]+")) {
+					nrOfParameter[i]++;
+				}
+			}
+			if (i != 0) {
+				Assert.assertEquals(nrOfParameter[i], nrOfParameter[i - 1],
+						"TestData file problem: wrong number of parameters");
+			}
+			i++;
+		}
+		return nrOfParameter[0];
 	}
 }

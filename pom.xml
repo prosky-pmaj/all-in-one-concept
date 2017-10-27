@@ -159,6 +159,7 @@
 						<version>${maven-surefire-plugin.version}</version>
 						<configuration>
 							<skipTests>true</skipTests>
+							<failIfNoTests>true</failIfNoTests>
 							<trimStackTrace>${trimStackTrace}</trimStackTrace>
 						</configuration>
 					</plugin>

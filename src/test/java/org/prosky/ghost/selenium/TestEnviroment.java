@@ -12,6 +12,7 @@ import org.prosky.ghost.selenium.baseFramework.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 
 public class TestEnviroment extends Assert {
@@ -44,11 +45,20 @@ public class TestEnviroment extends Assert {
 
 	@AfterMethod(alwaysRun = true)
 	public static void clearCookies() throws MalformedURLException {
+		getDriver().manage().deleteAllCookies();
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public static void dismisAlertIfPresent() throws MalformedURLException {
 		if (isAlertPresent()) {
 			getDriver().switchTo().alert().dismiss();
 			LOG.info("Alert was detected and dismissed");
 		}
-		getDriver().manage().deleteAllCookies();
+	}
+
+	@AfterTest(alwaysRun = true)
+	public static void deleteRemaningPosts() throws MalformedURLException {
+		// TODO: Implement removing remaining posts created by tests
 	}
 
 	@AfterSuite(alwaysRun = true)
