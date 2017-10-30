@@ -35,31 +35,9 @@ public class Test_01_BaseFunctionality extends TestEnviroment {
 		LOG.info("Start");
 		AdminPanelPage adminPanel = new AdminPanelPage(getDriver());
 		adminPanel.goTo();
-		// assertFalse(true);
 		adminPanel.logInAsAdmin();
 		Assert.assertFalse(adminPanel.isLogInRequired());
 		adminPanel.logOut();
 		LOG.info("enD");
 	}
-
-	// @DataProvider(name = "Authentication")
-	// public static Object[][] credentials() {
-	// return new Object[][] {
-	// { "admin@test.org", "admin123" },
-	// { "admin@prosky.org", "admin123" } };
-	// }
-	//
-	// @Test(dataProvider = "Authentication")
-	// public void test_04_logInToAdninPanelWithParams(String sUsername, String
-	// sPassword)
-	// throws Exception {
-	// AdminPanelPage adminPanel = new AdminPanelPage(getDriver());
-	// adminPanel.goTo();
-	// if (adminPanel.isLogInRequired() == false) {
-	// adminPanel.logOut();
-	// }
-	// adminPanel.logIn(sUsername, sPassword);
-	// Assert.assertFalse(adminPanel.isLogInRequired());
-	// adminPanel.logOut();
-	// }
 }

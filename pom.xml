@@ -19,7 +19,7 @@
 		<tests.exclude.patern />
 		<it.test>Test_01_BaseFunctionality</it.test>
 		<it.test>Test_02_PostCreateEditDelete#test_03_deletePost</it.test>
-		<it.test />
+		<it.test/>
 
 		<!-- Configuration: Test Object -->
 		<users.admin.email>admin@prosky.org</users.admin.email>
@@ -159,6 +159,7 @@
 						<version>${maven-surefire-plugin.version}</version>
 						<configuration>
 							<skipTests>true</skipTests>
+							<failIfNoTests>true</failIfNoTests>
 							<trimStackTrace>${trimStackTrace}</trimStackTrace>
 						</configuration>
 					</plugin>
@@ -198,6 +199,10 @@
 								<webdriver.gecko.driver>${webdriver.gecko.driver}</webdriver.gecko.driver>
 								<webdriver.edge.driver>${webdriver.edge.driver}</webdriver.edge.driver>
 							</systemPropertyVariables>
+							<additionalClasspathElements>
+ 								<additionalClasspathElement>./</additionalClasspathElement>
+							<additionalClasspathElement>./src/test/resources/test_data</additionalClasspathElement>
+							</additionalClasspathElements>
 						</configuration>
 						<executions>
 							<execution>

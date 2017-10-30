@@ -7,18 +7,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.prosky.ghost.selenium.baseFramework.UserInterfaceMapParser;
+import org.prosky.ghost.selenium.baseFramework.PropertiesParser;
 
-public class Page extends UserInterfaceMapParser {
+public abstract class Page {
 	private final String defaultSiteUrl = "http://localhost:2368/";
 	protected final String baseUrl = System.getProperty("site.url", defaultSiteUrl);
 	protected WebDriver driver;
 	protected WebDriverWait wait;
+	private PropertiesParser uiMap;
 
 	public Page(WebDriver driver) throws IOException {
 		this.driver = driver;
 		wait = new WebDriverWait(driver, 10);
+		uiMap = new PropertiesParser("user-interface-map.properties");
 	}
+
+	public abstract void goTo();
 
 	public void waitUntilFindElement(By by) {
 		wait.until(ExpectedConditions.numberOfElementsToBe(by, 1));
@@ -31,7 +35,7 @@ public class Page extends UserInterfaceMapParser {
 
 	public void waitUntilFindElement(String locatorName) {
 		try {
-			waitUntilFindElement(getLocator(locatorName));
+			waitUntilFindElement(uiMap.getLocator(locatorName));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,10 +44,15 @@ public class Page extends UserInterfaceMapParser {
 	}
 
 	public void waitUntilFindElement(String locatorName, int timeOut) {
-		waitUntilFindElement(getLocator(locatorName), timeOut);
+		waitUntilFindElement(uiMap.getLocator(locatorName), timeOut);
 	}
 
 	public WebElement findElement(String locatorName) {
-		return driver.findElement(getLocator(locatorName));
+		return driver.findElement(uiMap.getLocator(locatorName));
 	}
+
+	public String getPageTitle() {
+		return driver.getTitle();
+	}
+
 }
