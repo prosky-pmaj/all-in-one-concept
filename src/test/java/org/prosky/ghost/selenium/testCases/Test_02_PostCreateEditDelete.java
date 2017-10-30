@@ -32,7 +32,7 @@ public class Test_02_PostCreateEditDelete extends TestEnviroment {
 		LOG.info("enD");
 	}
 
-	@Test(dependsOnMethods = { "test_01_createPost" },
+	@Test(dependsOnMethods = { "test_01_createPost" }, ignoreMissingDependencies = true,
 			dataProvider = "getPostsTestData", dataProviderClass = DataProviderSource.class)
 	public void test_02_editPost(String postTitle, String postContent,
 			String postTitleAfterEdit, String postContentAfterEdit) throws Exception {
@@ -63,6 +63,7 @@ public class Test_02_PostCreateEditDelete extends TestEnviroment {
 			dataProvider = "getPostsTestData", dataProviderClass = DataProviderSource.class)
 	public void test_03_deletePost(String postTitleAfterEdit) throws Exception {
 		LOG.info("Start");
+		BlogPage blog = new BlogPage(getDriver());
 		AdminPanelPage adminPanel = new AdminPanelPage(getDriver());
 		adminPanel.goTo();
 		adminPanel.logInAsAdminIfRequired();
@@ -71,7 +72,9 @@ public class Test_02_PostCreateEditDelete extends TestEnviroment {
 		adminPanel.findPost(postTitleAfterEdit).click();
 		adminPanel.clickEditButton();
 		adminPanel.deletePost();
-		// TODO: Add checking if post is not there
+
+		blog.goTo();
+		assertFalse(blog.isPostPresent(postTitleAfterEdit));
 		LOG.info("enD");
 	}
 	// TODO: Multiple editing one post by adding text and by rewriting.
