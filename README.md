@@ -61,7 +61,7 @@ The fallowing structure have been presented to show good practices of TestSuite 
     * testsGroup
     * testsGroup/Test_01_someFunctionalityOfThisGroup.java
     
-###TestCases
+### TestCases
 The examples of test solving various programing challenges as well as showing useful functionality of TestFramework.
 
 * Test_01_BaseFunctionality.java: 
