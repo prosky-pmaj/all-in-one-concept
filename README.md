@@ -29,7 +29,7 @@ Features that TestFramework should have in order to be easy and fast to use, cle
   * clean code
     - achieved by:
       - PageObject design patterns 
-      - test scripts names and test method names clearly describe what is tested; each function call within the test method describes test step; by this tests are documentation in the same time
+      - descriptive naming policy - test scripts names and test method names clearly describe what is tested; each function call within the test method describes test step; by this tests are documentation in the same time
       - no comments policy - functions names and parameters manes should clearly explain what this function is doing
     
   
