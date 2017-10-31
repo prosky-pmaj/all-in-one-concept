@@ -6,39 +6,43 @@ This is an example to demonstrate a TestFramework for UI testing. Written in Jav
 ## Design Explanation
 
 ### Features
-Features that testing framework should have in order to be easy and fast to use, clear and easy to understand, maintainable and scalable.
+Features that TestFramework should have in order to be easy and fast to use, clear and easy to understand, maintainable and scalable.
 
 * General
   * easy to install & run
     - we don't want new employees to spend hours trying to run the test as well as we want developers to be able to quickly run tests for their purposes
-    - here achieved by Maven, one command to install all dependencies and run tests
+    - achieved by Maven, one command to install all dependencies and run tests
       - can run from command line - useful for Jenkins integration and for developers
       - can run from IDE - useful during test development, easy to analyze test runs and results 
   * configurable test run 
     - possible to run one test, all tests in one script, group of tests, all tests with particular attribute, all test without particular attribute, all tests
-    - here achieved by SureFire and FailSafe Maven plugins and TestNG
+    - achieved by SureFire and FailSafe Maven plugins and TestNG
       - all configuration in pom.xml file - makes easy to adjust configuration when everything is in one file
       - can be configured through command line parameters - useful to overwrite configuration in particular cases
   * reporting 
     - possible e.g. XML in JUnit, MySQL, Excel, console output, possible to track status during run
-    - to be done
+    - achieved by FailSafe plugin in XML, JUnit XML, HTML, txt format
+    - trackind status during test run have to be done
   * logging and error handling 
     - makes easy to debug tests scripts and identify issues
     - to be done more properly
-  * clean code 
-    - the comments are not allowed, functions names and parameters manes should clearly explain what this function is doing
-    - above refers also to test scripts names and test method names, they should be fully describe what is tested; each function call within the method should describes test step
-    - here achieved by PageObject or ComopnentInterface design patterns 
+  * clean code
+    - achieved by:
+      - PageObject design patterns 
+      - test scripts names and test method names clearly describe what is tested; each function call within the test method describes test step; by this tests are documentation in the same time
+      - no comments policy - functions names and parameters manes should clearly explain what this function is doing
+    
   
 * Specific for UI testing
   * platform independent 
     - possible to run on Windows, Linux, Mac OS X
     - to be tested on Windows and Linux
   * browser independent
-    - here achieved by Factory design pattern, possible to run against any browser, to be tested
+    - achieved by Factory design pattern, possible to run against any browser
+    - need to be tested on other browsers than Firefox or Chrome
   * maintainable 
     - page look and HTML structure changes from time to time, framework should be easily adjustable
-    - here achieved by ObjectMap design pattern, one text file which is map between UI and test code so developers if changing UI, they can change map file as well and tests remain valid
+    - achieved by ObjectMap design pattern, one text file which is map between UI and test code so developers if changing UI, they can change map file as well and tests remain valid
 
 ### Structure
 The fallowing structure have been presented to show good practices of TestSuite organization.
@@ -65,10 +69,10 @@ The fallowing structure have been presented to show good practices of TestSuite 
 The examples of test solving various programing challenges as well as showing useful functionality of TestFramework.
 
 * `Test_01_BaseFunctionality.java`:
-    Contain very basic tests like entering blog page, entering admin page and log in. They are basic check it there was no major error in the code so code doesn't compile, doesn't start of crash just after start. If any of these fail there is no sense to run any other because it means that there is an obvious mistake that need to be fixed immediately. In order to ensure this tests have annotation @Test(groups = "initialCheck") and all other have annotation @Test(dependsOnGroups = { "initialCheck" }). Additionally other tests have parameter Test(ignoreMissingDependencies = true}) this allow as during test development run only this one test. So if all TestSuite is run and initialCheck not success, dependent tests would be skipped but if run a single tests, dependencies would be ignored.
+    Contain very basic tests like entering blog page, entering admin page and log in. They are basic check it there was no major error in the code so code doesn't compile, doesn't start of crash just after start. If any of these fail there is no sense to run any other because it means that there is an obvious mistake that need to be fixed immediately. In order to ensure this tests have annotation @Test(groups = "initialCheck") and all other have annotation @Test(dependsOnGroups = { "initialCheck" }). Additionally other tests have parameter Test(ignoreMissingDependencies = true}) this is useful during test development and allow to run this one test separetly. So if full TestSuite is run and initialCheck not success, dependent tests would be skipped but if run a single tests, dependencies would be ignored.
 
 * `Test_02_PostCreateEditDelete.java`:
-    This tests are showing Data-driven approach. Each tests is run multiple times depends on data set.
+    This tests are showing DataDriven approach. Each tests is run multiple times depends on data set.
 
 
 ## Installation
