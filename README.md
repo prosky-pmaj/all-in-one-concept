@@ -1,7 +1,46 @@
 Ghost TestSuite - Example of Java Selenium TestFramawork
 =======================
 
-A TestFramework for Selenium 3 WebDriver combain with Maven and TestNG.
+This is an example to demonstrate a TestFramework for testing user intervace written in Java and base on Selenium 3 WebDriver, Maven and TestNG.
+
+## Design Explanation
+
+###Features
+Features tha testing framework should have in order to be easy and fast to use, clear and easy to understand, maintanable and scalable.
+
+* General
+  * easy to install & run
+    - we dont want new employess to spend hours trying to run the test as well as we want developers to be able to quickly run tests for their pruposes
+    - here atchived by Maven, one comand to install all dependencies and run tests
+      - can run from command line - useful for Jenkins integration and for develpoers
+      - can run from IDE - useful during test development, easy to analyse test runs and results 
+  * configurable test run 
+    - possible to run one test, all tests in one script, group of tests, all tests with particular attribute, all test without particular attribute, all tests
+    - here atchived by SureFire and FailSafe Maven plugins and TestNG
+      - all config in pom.xml file - makes it easy to adiust configuration when all is in one file
+      - can be config through comand line patameters - useful to overwrite config in particular cases
+  * reporting 
+    - possible e.g. XML in JUnit, MySQL, Excel, console output, possible to track status during run
+    - to be done
+  * logging and error handling 
+    - makes easy to debug tests scripts and identify issues
+    - to be done more properly
+  * clean code 
+    - liblaries not but test script should be buisnes redable
+    - here atchived by PageObject or ComopnentInterface design paterns 
+  * 
+  
+* Specyfic for UserInterface testing
+  * platform independent 
+    - possible to run on Windows, Linux, Mac OS X
+    - to be tested on Windows and Linuc
+  * browswer independent
+    - here acheved by Factory design patern, posible to run against any browswer, to be tested
+  * maintanable 
+    - page look and HTML structure changes from time to time, framework should be easly adjustable
+    - here acheved by ObjectMap design patern, one text file which is map betwen UI and test code so developers if changind UI, they can change map file as well and tests remain valid
+
+## Instalation
 
 ### Prerequisites
 
