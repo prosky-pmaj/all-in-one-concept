@@ -17,8 +17,8 @@ Features that testing framework should have in order to be easy and fast to use,
   * configurable test run 
     - possible to run one test, all tests in one script, group of tests, all tests with particular attribute, all test without particular attribute, all tests
     - here achieved by SureFire and FailSafe Maven plugins and TestNG
-      - all config in pom.xml file - makes it easy to adjust configuration when all is in one file
-      - can be config through command line parameters - useful to overwrite config in particular cases
+      - all configuration in pom.xml file - makes easy to adjust configuration when everything is in one file
+      - can be configured through command line parameters - useful to overwrite configuration in particular cases
   * reporting 
     - possible e.g. XML in JUnit, MySQL, Excel, console output, possible to track status during run
     - to be done
