@@ -1,7 +1,7 @@
 Ghost TestSuite - Example of Java Selenium TestFramawork
 =======================
 
-This is an example to demonstrate a TestFramework for testing user interface written in Java and base on Selenium 3 WebDriver, Maven and TestNG.
+This is an example to demonstrate a TestFramework for UI testing. Written in Java with help of Selenium 3 WebDriver, Maven and TestNG.
 
 ## Design Explanation
 
@@ -30,7 +30,7 @@ Features that testing framework should have in order to be easy and fast to use,
     - above refers also to test scripts names and test method names, they should be fully describe what is tested; each function call within the method should describes test step
     - here achieved by PageObject or ComopnentInterface design patterns 
   
-* Specific for UserInterface testing
+* Specific for UI testing
   * platform independent 
     - possible to run on Windows, Linux, Mac OS X
     - to be tested on Windows and Linux
@@ -44,30 +44,30 @@ Features that testing framework should have in order to be easy and fast to use,
 The fallowing structure have been presented to show good practices of TestSuite organization.
 
 * Project root
-  * pom.xml - contains all settings for installation and tests run
-  * logging.properties - text file with the logging settings, should be in project root because contains global settings as well
-  * user-interface-map.properties - text file contains ObjectMap between UI and test code, should be at the project root because contains common content and should be easily accessible for everybody
-  * src/test/java/org.prosky.ghost.selenium - actual TestSuite
-  * src/test/resources - resources used for testing
-  * target - all files generated during test run
+  * `pom.xml` - contains all settings for installation and tests run
+  * `logging.properties` - text file with the logging settings, should be in project root because contains global settings as well
+  * `user-interface-map.properties` - text file contains ObjectMap between UI and test code, should be at the project root because contains common content and should be easily accessible for everybody
+  * `src/test/java/org.prosky.ghost.selenium` - actual TestSuite
+  * `src/test/resources` - resources used for testing
+  * `target` - all files generated during test run
  
 * TestSiute (org.prosky.ghost.selenium)
-  * TestEnviroment.java - general script contains all function needed to prepare TestEnvironment
-  * baseFramework - all modules/classes providing base framework functionality, can be common for many test suites of the same type i.e. functional tests of UI for different WebApplications
-  * pageObjects - wrapper of selenium functions to page specific business readable functions, represent  functionality of specific WebApplication
-  * testCases - test scripts and test methods have to fallow the naming convention while groups not; this naming convention allows easy recognize tests and ensure order of execution; pattern is fallowed by fully descriptive name explaining what is tested; groups just describe general tested functionality and order is not important
-    * Test_01_someFunctionality.java
-    * Test_01_someFunctionality.java > test_01_particularUsageOfFunctionality
-    * testsGroup
-    * testsGroup/Test_01_someFunctionalityOfThisGroup.java
+  * `TestEnviroment.java` - general script contains all function needed to prepare TestEnvironment
+  * `baseFramework` - all modules/classes providing base framework functionality, can be common for many test suites of the same type i.e. functional tests of UI for different WebApplications
+  * `pageObjects` - wrapper of selenium functions to page specific business readable functions, represent  functionality of specific WebApplication
+  * `testCases` - test scripts and test methods have to fallow the naming convention while groups not; this naming convention allows easy recognize tests and ensure order of execution; pattern is fallowed by fully descriptive name explaining what is tested; groups just describe general tested functionality and order is not important
+    * `Test_01_someFunctionality.java`
+    * `Test_01_someFunctionality.java > test_01_particularUsageOfFunctionality`
+    * `testsGroup`
+    * `testsGroup/Test_01_someFunctionalityOfThisGroup.java`
     
 ### TestCases
 The examples of test solving various programing challenges as well as showing useful functionality of TestFramework.
 
-* Test_01_BaseFunctionality.java: 
+* `Test_01_BaseFunctionality.java`:
     Contain very basic tests like entering blog page, entering admin page and log in. They are basic check it there was no major error in the code so code doesn't compile, doesn't start of crash just after start. If any of these fail there is no sense to run any other because it means that there is an obvious mistake that need to be fixed immediately. In order to ensure this tests have annotation @Test(groups = "initialCheck") and all other have annotation @Test(dependsOnGroups = { "initialCheck" }). Additionally other tests have parameter Test(ignoreMissingDependencies = true}) this allow as during test development run only this one test. So if all TestSuite is run and initialCheck not success, dependent tests would be skipped but if run a single tests, dependencies would be ignored.
 
-* Test_02_PostCreateEditDelete.java
+* `Test_02_PostCreateEditDelete.java`:
     This tests are showing Data-driven approach. Each tests is run multiple times depends on data set.
 
 
