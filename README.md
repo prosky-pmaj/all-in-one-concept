@@ -3,6 +3,12 @@ Ghost TestSuite - Example of Java Selenium TestFramawork
 
 This is an example to demonstrate a TestFramework for UI testing. Written in Java with help of Selenium 3 WebDriver, Maven and TestNG.
 
+## Introduction
+
+This software have been written to show how should properly designed framework look like. To demonstrate good practices, structure and techniques used for test automation.
+
+In directory `./doc` you can find all documents demonstrating **test planing** and **test execution** phrase as well as all documents that should be created during this phrases. The approach is to provide absolute minimum amount of documentation to cover all necessary information and make base for well organized test project. Only MS Word and Excel have been used as in practice this is the only documenting standard across most of the companies around word. [This folder usually would not be part of code repository but for purposes of easy demonstration it have been placed here]
+
 ## Design Explanation
 
 ### Features
